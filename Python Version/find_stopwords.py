@@ -1,4 +1,3 @@
-
 import pandas as pd
 import os
 import re
@@ -40,8 +39,6 @@ bigram: for testing different bigrams, test them separately for clearer output
 
 def find_ngrams(text_series, bigram):
 
-    print(bigram)
-
     # splits the bigram for easier processing
     bigram_tokens = bigram.split('_')
 
@@ -57,9 +54,11 @@ def find_ngrams(text_series, bigram):
     #ngram_list = [get_ngrams(text) for text in text_series if type(text)==str]
     
 
-    words_before = [[entry[0] for entry in get_ngrams(text.lower())] for text in text_series if type(text)==str]
-    stopwords_between = [[entry[1] for entry in get_ngrams(text.lower())] for text in text_series if type(text)==str]
-    words_after = [[entry[2] for entry in get_ngrams(text.lower())] for text in text_series if type(text)==str]
+    full_list = [get_ngrams(text.lower()) for text in text_series if type(text)==str]
+
+    words_before = [[entry[0] for entry in ngram_list] for ngram_list in full_list if type(ngram_list)==list]
+    stopwords_between = [[entry[1] for entry in ngram_list] for ngram_list in full_list if type(ngram_list)==list]
+    words_after = [[entry[2] for entry in ngram_list] for ngram_list in full_list if type(ngram_list)==list]
 
     # flattens the matrices
     words_before = sum(words_before, [])
@@ -78,9 +77,9 @@ def find_ngrams(text_series, bigram):
         output_stopwords = re.sub('\n\d+', '\n', str(output_stopwords))
         output_before = re.sub('\n\d+', '\n', str(output_before))
         output_after = re.sub('\n\d+', '\n', str(output_after))
-        output = total + '\n\n'+ output_stopwords + '\n\n' + output_before + '\n\n' + output_after
+        output = bigram+'\n'+total + '\n\n'+ output_stopwords + '\n\n' + output_before + '\n\n' + output_after
     else:
-        output = 'No occurrences for '+bigram+'? Check this.'
+        output = 'No occurrences for '+bigram
 
     return output
 
