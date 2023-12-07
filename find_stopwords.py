@@ -16,7 +16,7 @@ bigrams = pd.read_excel('bigrams.xlsx')
 text_column = 'Mention Content'
 
 # loads a shared set of stopwords from NLTK and spaCy
-# kept in an texternal .txt file, feel free to modify with others
+# kept in an external .txt file, feel free to modify with others
 stopwords = open('stopwords 2.txt', 'r', encoding="utf-8").read()
 stopwords = stopwords.split('\n')
 
