@@ -51,9 +51,6 @@ def find_ngrams(text_series, bigram):
         
         return ngrams
 
-    #ngram_list = [get_ngrams(text) for text in text_series if type(text)==str]
-    
-
     full_list = [get_ngrams(text.lower()) for text in text_series if type(text)==str]
 
     words_before = [[entry[0] for entry in ngram_list] for ngram_list in full_list if type(ngram_list)==list]
