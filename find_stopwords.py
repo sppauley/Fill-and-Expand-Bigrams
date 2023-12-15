@@ -52,7 +52,7 @@ def find_ngrams(text_series, bigram):
 
         # finds all ngrams starting with the first bigram token and ending with the last
         # adds \w characters, since word PPR removes plurals 's' and verb endings like 'ed'
-        ngrams = re.findall('((?:\w+\s)?('+bigram_tokens[0]+'\w*'+' '+pattern+bigram_tokens[1]+')\w*'+'(?:\s\w+)?)', text)
+        ngrams = re.findall('((?:\w+\s)?('+bigram_tokens[0]+'\w*'+' '+pattern+bigram_tokens[1]+'\w*)'+'(?:\s\w+)?)', text)
         
         return ngrams
 
@@ -101,6 +101,8 @@ def fill_bigrams(text_filepath):
             print(bigram_set)
             output = pd.concat([output, bigram_set])
 
+    output['issue'] = issue_category
+
     return output
 
 #=======================================================
@@ -120,5 +122,7 @@ for file in file_list:
     output_df = pd.concat([output_df, fill_bigrams(file)])
 
 # writes the output to a .xlsx file
-output_df.to_excel('Output.xlsx')
+with pd.ExcelWriter('Output.xlsx') as writer:
+    for issue in output_df['issue'].unique():
+        output_df[output_df['issue']==issue].to_excel(writer, sheet_name = issue)
 
