@@ -12,7 +12,7 @@ Takes an argument for the root bigram and the full bigram .xlsx file
 Returns true if passes check, else false
 '''
 def check_in_keywords(root_bigram, keyword_list):
-    return root_bigram in keyword_list
+    return any([True if keyword in root_bigram else False for keyword in keyword_list])
 
 # Rule 2 & 3: checks if the bigram frequency is greater than or equal to 5
 '''
@@ -51,6 +51,13 @@ Takes an argument for the stopwords output and the full bigram .xlsx file
 Returns filtered dataframe
 '''
 def filter_order(test_dataframe, keyword_list, frequency = 5):
+
+    def check_capture(phrase):
+        return any([True if keyword in phrase else False for keyword in keyword_list])
+
+    # applies and filters based on the capture check
+    test_dataframe['filter'] = test_dataframe['ngrams'].apply(lambda x: check_capture(x))
+    test_dataframe = test_dataframe.rename(columns={'ngrams':'keyword'})
     return test_dataframe[test_dataframe['count'] >= frequency]
 
 #=======================================================

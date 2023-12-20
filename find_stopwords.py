@@ -29,6 +29,8 @@ keyword_list = keyword_list.split(', ')
 # allows for up to quandrigrams
 pattern = '(?:(?:'+'|'.join(stopwords)+')\s)*'
 
+print([keyword for keyword in keyword_list])
+
 #=======================================================
 #
 # Functions
