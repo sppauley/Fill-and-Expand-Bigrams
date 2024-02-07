@@ -54,7 +54,7 @@ def find_ngrams(text_series, bigram):
 
         # finds all ngrams starting with the first bigram token and ending with the last
         # adds \w characters, since word PPR removes plurals 's' and verb endings like 'ed'
-        ngrams = re.findall('((?:\w+\s)?('+bigram_tokens[0]+'\w*'+' '+pattern+bigram_tokens[1]+'\w*)'+'(?:\s\w+)?)', text)
+        ngrams = re.findall("((?:[\w']+\s)?("+bigram_tokens[0]+"[\w']*"+' '+pattern+bigram_tokens[1]+"[\w']*)"+"(?:\s[\w']+)?)", text)
         
         return ngrams
 
